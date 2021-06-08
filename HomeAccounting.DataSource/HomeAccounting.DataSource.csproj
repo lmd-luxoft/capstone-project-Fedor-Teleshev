@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HomeAccounting.DataSource.Contract\HomeAccounting.DataSource.Contract.csproj" />
+  </ItemGroup>
+
 </Project>
