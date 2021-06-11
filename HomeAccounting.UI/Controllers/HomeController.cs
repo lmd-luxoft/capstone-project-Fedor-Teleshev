@@ -1,4 +1,5 @@
-﻿using HomeAccounting.UI.Models;
+﻿using HomeAccounting.BusinessLogic.Contract;
+using HomeAccounting.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,10 +13,12 @@ namespace HomeAccounting.UI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IAccounting _accountingService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IAccounting accountingService)
         {
             _logger = logger;
+            _accountingService = accountingService;
         }
 
         public IActionResult Index()
@@ -26,6 +29,22 @@ namespace HomeAccounting.UI.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult CreateAccount()
+        {
+            _accountingService.CreateAccount(new Account
+            {
+                Tittle ="test",
+                CreationDate = DateTime.Now
+            });
+            return Json(new { StatusCode = true });
+        }
+
+        public IActionResult GetAccountById()
+        {
+            var account = _accountingService.GetAccountById(3);
+            return Json(account);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
