@@ -9,6 +9,5 @@ namespace HomeAccounting.BusinessLogic.Contract
         public int Id { get; set; }
         public string Tittle { get; set; }
         public DateTime CreationDate { get; set; }
-
     }
 }

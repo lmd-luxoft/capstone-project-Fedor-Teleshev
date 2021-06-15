@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HomeAccounting.BusinessLogic.Contract\HomeAccounting.BusinessLogic.Contract.csproj" />
+    <ProjectReference Include="..\HomeAccounting.BusinessLogic.EF\HomeAccounting.BusinessLogic.EF.csproj" />
     <ProjectReference Include="..\HomeAccounting.BusinessLogic\HomeAccounting.BusinessLogic.csproj" />
     <ProjectReference Include="..\HomeAccounting.DataSource.Contract\HomeAccounting.DataSource.Contract.csproj" />
     <ProjectReference Include="..\HomeAccounting.DataSource\HomeAccounting.DataSource.csproj" />
