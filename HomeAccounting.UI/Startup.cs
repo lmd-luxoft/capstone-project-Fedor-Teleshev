@@ -26,6 +26,7 @@ namespace HomeAccounting.UI
             services.AddControllersWithViews();
             AspNetApplicationBuilder app = new AspNetApplicationBuilder(services);
             app.Build();
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,10 +42,15 @@ namespace HomeAccounting.UI
             }
             app.UseStaticFiles();
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "HomeAccounting API V1");
+                c.RoutePrefix = string.Empty;
+            });
+            
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
