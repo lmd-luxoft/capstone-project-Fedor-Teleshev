@@ -1,12 +1,12 @@
 ﻿using HomeAccounting.BusinessLogic.Contract.Dto;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HomeAccounting.BusinessLogic.Contract
 {
     public interface IAccountingService
     {
-        void CreateAccount(AccountModel account);
+        string CreateSimpleAccount(AccountDto account);
+        string CreateCash(CashDto account);
+        string CreateDeposit(DepositDto account);
+        string CreateProperty(PropertyDto account);
     }
 }

@@ -1,7 +1,7 @@
 ﻿
-namespace HomeAccounting.BusinessLogic.EF.Domain
+namespace HomeAccounting.UI.Models
 {
-    public class Cash : Account
+    public class CashModel : AccountModel
     {
         public int CoinNumber { get; set; }
         public int CashNumber { get; set; }

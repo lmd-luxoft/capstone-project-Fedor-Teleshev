@@ -1,7 +1,7 @@
 ﻿
-namespace HomeAccounting.BusinessLogic.EF.Domain
+namespace HomeAccounting.BusinessLogic.Contract.Dto
 {
-    public class Cash : Account
+    public class CashDto : AccountDto
     {
         public int CoinNumber { get; set; }
         public int CashNumber { get; set; }

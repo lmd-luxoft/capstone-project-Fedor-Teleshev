@@ -13,31 +13,8 @@ namespace HomeAccounting.BusinessLogic.EF.ApplicationLogic
         {
             _ctx = ctx;
         }
-
-        public void CreateAccount(AccountModel account)
-        {
-            switch (account.Type)
-            {
-                case AccountModel.AccountType.Simple:
-                    CreateSimpleAccount(account);
-                    break;
-                case AccountModel.AccountType.Cash:
-                    CreateCash(account);
-                    break;
-                case AccountModel.AccountType.Deposit:
-                    CreateDeposit(account);
-                    break;
-                
-                case AccountModel.AccountType.Property:
-                    CreateProperty(account);
-                    break;
-                default:
-                    throw new Exception("Wrong account type");
-            }
-            _ctx.SaveChanges();
-        }
-
-        private void CreateSimpleAccount(AccountModel account)
+        
+        public string CreateSimpleAccount(AccountDto account)
         {
             var newAccount = new Domain.Account
             {
@@ -46,61 +23,60 @@ namespace HomeAccounting.BusinessLogic.EF.ApplicationLogic
                 Tittle = account.Tittle,
             };
             _ctx.Accounts.Add(newAccount);
+            _ctx.SaveChanges();
+            return "Ok";
         }
 
-        private void CreateCash(AccountModel account)
+        public string CreateCash(CashDto account)
         {
-            if (account.Cash == null)
-                return;
-
             var cash = new Cash
             {
                 Balance = account.Amount,
                 CreationDate = DateTime.Now,
                 Tittle = account.Tittle,
-                CoinNumber = account.Cash.CoinNumber,
-                CashNumber = account.Cash.CashNumber
+                CoinNumber = account.CoinNumber,
+                CashNumber = account.CashNumber
             };
             _ctx.Cashes.Add(cash);
+            _ctx.SaveChanges();
+            return "Ok";
         }
 
-        private void CreateDeposit(AccountModel account)
+        public string CreateDeposit(DepositDto account)
         {
-            if (account.Deposit == null)
-                return;
-
-            var bank = _ctx.Banks.Where(x => x.Bik == account.Deposit.Bank.Bik).FirstOrDefault();
+            var bank = _ctx.Banks.Where(x => x.Bik == account.Bank.Bik).FirstOrDefault();
             
             var deposit = new Deposit
             {
                 Balance = account.Amount,
                 CreationDate = DateTime.Now,
                 Tittle = account.Tittle,
-                Percent = account.Deposit.Percent,
+                Percent = account.Percent,
                 Bank = bank == null ? bank : new Bank
                 {
-                    Bik = account.Deposit.Bank.Bik,
-                    CorrespondedAccount = account.Deposit.Bank.CorrespondedAccount,
-                    Tittle = account.Deposit.Bank.Tittle
+                    Bik = account.Bank.Bik,
+                    CorrespondedAccount = account.Bank.CorrespondedAccount,
+                    Tittle = account.Bank.Tittle
                 },
             };
             _ctx.Deposits.Add(deposit);
+            _ctx.SaveChanges();
+            return "Ok";
         }
 
-        private void CreateProperty(AccountModel account)
+        public string CreateProperty(PropertyDto account)
         {
-            if (account.Property == null)
-                return;
-
             var property =  new Property
             {
                 Balance = account.Amount,
                 CreationDate = DateTime.Now,
-                Location = account.Property.Location,
+                Location = account.Location,
                 Tittle = account.Tittle,
-                Type = (PropertyType) account.Property.PropertyType
+                Type = (PropertyType) account.PropertyType
             };
             _ctx.Propertes.Add(property);
+            _ctx.SaveChanges();
+            return "Ok";
         }
 
          

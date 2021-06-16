@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using HomeAccounting.BusinessLogic.Contract;
+﻿using HomeAccounting.BusinessLogic.Contract;
 using HomeAccounting.BusinessLogic.Contract.Dto;
 using HomeAccounting.UI.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -27,38 +22,71 @@ namespace HomeAccounting.UI.Controllers
             _accountingService = accountingService;
         }
 
-        [HttpGet("CreateAccount")]
-        public IActionResult CreateAccount(AccountDto account)
+        [HttpGet("CreateSimpleAccount")]
+        public IActionResult CreateSimpleAccount(AccountModel account)
         {
-            var model = new AccountModel
+            var model = new AccountDto
             {
                 Tittle = account.Tittle,
                 Amount = account.Amount,
-                Type = (AccountModel.AccountType)account.Type,
-                Cash = account.Cash ==  null ? null : new CashModel 
-                { 
-                    CoinNumber = account.Cash.CoinNumber,
-                    CashNumber = account.Cash.CashNumber
-                },
-                Deposit = account.Deposit == null ? null : new DepositModel
+                Type = (AccountDto.AccountType)account.Type,
+            };
+
+            var result = _accountingService.CreateSimpleAccount(model);
+            return Json(new { StatusCode = result });
+        }
+
+        [HttpGet("CreateCash")]
+        public IActionResult CreateCash(CashModel account)
+        {
+            var model = new CashDto
+            {
+                Tittle = account.Tittle,
+                Amount = account.Amount,
+                Type = (AccountDto.AccountType)account.Type,
+                CoinNumber = account.CoinNumber,
+                CashNumber = account.CashNumber
+            };
+
+            var result = _accountingService.CreateCash(model);
+            return Json(new { StatusCode = result });
+        }
+
+        [HttpGet("CreateDeposit")]
+        public IActionResult CreateDeposit(DepositModel account)
+        {
+            var model = new DepositDto
+            {
+                Tittle = account.Tittle,
+                Amount = account.Amount,
+                Type = (AccountDto.AccountType)account.Type,
+                Percent = account.Percent,
+                Bank = new BankDto
                 {
-                    Percent = account.Deposit.Percent,
-                    Bank = new BankModel
-                    {
-                        Bik = account.Deposit.Bank.Bik,
-                        Tittle = account.Deposit.Bank.Tittle,
-                        CorrespondedAccount = account.Deposit.Bank.CorrespondedAccount
-                    }
-                },
-                Property = account.Property == null ? null : new PropertyModel
-                {
-                    Location = account.Property.Location,
-                    PropertyType = account.Property.PropertyType
+                    Bik = account.Bank.Bik,
+                    Tittle = account.Bank.Tittle,
+                    CorrespondedAccount = account.Bank.CorrespondedAccount
                 }
             };
 
-            _accountingService.CreateAccount(model);
-            return Json(new { StatusCode = true });
+            var result = _accountingService.CreateDeposit(model);
+            return Json(new { StatusCode = result });
+        }
+
+        [HttpGet("CreateProperty")]
+        public IActionResult CreateProperty(PropertyModel account)
+        {
+            var model = new PropertyDto
+            {
+                Tittle = account.Tittle,
+                Amount = account.Amount,
+                Type = (AccountDto.AccountType)account.Type,
+                Location = account.Location,
+                PropertyType = account.PropertyType
+            };
+
+            var result = _accountingService.CreateProperty(model);
+            return Json(new { StatusCode = result });
         }
     }
 }
