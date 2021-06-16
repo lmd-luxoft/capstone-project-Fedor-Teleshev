@@ -52,7 +52,7 @@ namespace HomeAccounting.BusinessLogic.EF.ApplicationLogic
                 CreationDate = DateTime.Now,
                 Tittle = account.Tittle,
                 Percent = account.Percent,
-                Bank = bank == null ? bank : new Bank
+                Bank = bank != null ? bank : new Bank
                 {
                     Bik = account.Bank.Bik,
                     CorrespondedAccount = account.Bank.CorrespondedAccount,
@@ -69,9 +69,10 @@ namespace HomeAccounting.BusinessLogic.EF.ApplicationLogic
             var property =  new Property
             {
                 Balance = account.Amount,
+                Tittle = account.Tittle,
                 CreationDate = DateTime.Now,
                 Location = account.Location,
-                Tittle = account.Tittle,
+                BasePrice = account.BasePrice,
                 Type = (PropertyType) account.PropertyType
             };
             _ctx.Propertes.Add(property);

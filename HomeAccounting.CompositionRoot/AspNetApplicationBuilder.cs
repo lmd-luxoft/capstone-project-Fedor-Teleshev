@@ -4,9 +4,6 @@ using HomeAccounting.BusinessLogic.EF.ApplicationLogic;
 using HomeAccounting.DataSource;
 using HomeAccounting.DataSource.Contract;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HomeAccounting.CompositionRoot
 {

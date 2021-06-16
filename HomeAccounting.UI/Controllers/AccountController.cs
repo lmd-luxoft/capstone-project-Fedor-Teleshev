@@ -22,28 +22,26 @@ namespace HomeAccounting.UI.Controllers
             _accountingService = accountingService;
         }
 
-        [HttpGet("CreateSimpleAccount")]
+        [HttpPost("CreateSimpleAccount")]
         public IActionResult CreateSimpleAccount(AccountModel account)
         {
             var model = new AccountDto
             {
                 Tittle = account.Tittle,
                 Amount = account.Amount,
-                Type = (AccountDto.AccountType)account.Type,
             };
 
             var result = _accountingService.CreateSimpleAccount(model);
             return Json(new { StatusCode = result });
         }
 
-        [HttpGet("CreateCash")]
+        [HttpPost("CreateCash")]
         public IActionResult CreateCash(CashModel account)
         {
             var model = new CashDto
             {
                 Tittle = account.Tittle,
                 Amount = account.Amount,
-                Type = (AccountDto.AccountType)account.Type,
                 CoinNumber = account.CoinNumber,
                 CashNumber = account.CashNumber
             };
@@ -52,14 +50,13 @@ namespace HomeAccounting.UI.Controllers
             return Json(new { StatusCode = result });
         }
 
-        [HttpGet("CreateDeposit")]
+        [HttpPost("CreateDeposit")]
         public IActionResult CreateDeposit(DepositModel account)
         {
             var model = new DepositDto
             {
                 Tittle = account.Tittle,
                 Amount = account.Amount,
-                Type = (AccountDto.AccountType)account.Type,
                 Percent = account.Percent,
                 Bank = new BankDto
                 {
@@ -73,15 +70,15 @@ namespace HomeAccounting.UI.Controllers
             return Json(new { StatusCode = result });
         }
 
-        [HttpGet("CreateProperty")]
+        [HttpPost("CreateProperty")]
         public IActionResult CreateProperty(PropertyModel account)
         {
             var model = new PropertyDto
             {
                 Tittle = account.Tittle,
                 Amount = account.Amount,
-                Type = (AccountDto.AccountType)account.Type,
                 Location = account.Location,
+                BasePrice = account.BasePrice,
                 PropertyType = account.PropertyType
             };
 
